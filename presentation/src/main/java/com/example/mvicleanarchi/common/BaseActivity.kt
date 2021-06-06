@@ -28,6 +28,7 @@ abstract class BaseActivity<INTENT : ViewIntent, ACTION : ViewAction, STATE : Vi
             viewState = it
             render(it)
         })
+
         initDATA()
         initEVENT()
     }
