@@ -16,7 +16,7 @@ android {
         versionCode buildConfig.version.code
         versionName buildConfig.version.name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "API_BASE_URL", URL_WS
+
 
     }
 
@@ -37,7 +37,8 @@ android {
     }
     kotlinOptions { jvmTarget = JavaVersion.VERSION_1_8.toString() }
 
-    buildFeatures { viewBinding = true }
+    buildFeatures { viewBinding = true
+        dataBinding = true}
 }
 
 dependencies {
@@ -47,14 +48,16 @@ dependencies {
     implementation deps.androidx.recyclerview
     implementation deps.androidx.cardview
     implementation deps.androidx.viewModel
+    implementation deps.androidx.fragment
     implementation deps.coil
     implementation deps.androidx.liveData
-    implementation deps.dagger.common
+    implementation deps.koin.android
     implementation deps.squareup.converter_gson
-    implementation deps.stetho
+
     implementation deps.material_component
-    implementation deps.dagger.common
-    kapt deps.dagger.compiler
+    implementation deps.koin.android
+    implementation deps.koin.core
+    implementation deps.koin.viewmodel
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

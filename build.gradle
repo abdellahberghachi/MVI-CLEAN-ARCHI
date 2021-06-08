@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        kotlin_version = "1.3.72"
+        kotlin_version = "1.5.0"
         buildConfig = [
                 'compileSdk': 30,
                 'minSdk'    : 26,
@@ -18,19 +18,19 @@ buildscript {
                 'appcompat'            : '1.2.0',
                 'recyclerview'         : '1.1.0',
                 'cardview'             : '1.0.0',
-                'constraintlayout'     : '1.1.3',
-                'core_ktx'             : '1.3.1',
-                'kotlin'               : '1.4.0',
-                'kotlinCoroutines'     : '1.3.9',
-                'lifecycle'            : '2.2.0',
-                'dagger'               : '2.28.3',
+                'constraintlayout'     : '2.0.4',
+                'core_ktx'             : '1.3.0',
+                'kotlin'               : '1.5.0',
+                'kotlinCoroutines'     : '1.4.2',
+                'lifecycle'            : '2.3.0-rc01',
+                'koin_version'         : '2.2.3',
                 'retrofit'             : '2.9.0',
-                'stetho'               : '1.5.1',
                 'kotlinx_serialization': '1.0.0-RC',
-                'coil': '0.11.0',
+                'coil'                 : '0.11.0',
+                'framgent'             : '1.2.5',
         ]
         deps = [
-                'androidx' : [
+                'androidx'          : [
                         appcompat       : "androidx.appcompat:appcompat:${versions.appcompat}",
                         cardview        : "androidx.cardview:cardview:${versions.cardview}",
                         constraintlayout: "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}",
@@ -38,24 +38,26 @@ buildscript {
                         recyclerview    : "androidx.recyclerview:recyclerview:${versions.recyclerview}",
                         viewModel       : "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}",
                         liveData        : "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}",
+                        fragment        : "androidx.fragment:fragment-ktx:${versions.framgent}"
 
                 ],
-                'jetbrains': [
+                'jetbrains'         : [
                         stdlib               : "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
                         coroutines_core      : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.kotlinCoroutines}",
                         coroutines_android   : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.kotlinCoroutines}",
                         kotlinx_serialization: "org.jetbrains.kotlinx:kotlinx-serialization-core:${versions.kotlinx_serialization}",
                 ],
-                'dagger'   : [
-                        common  : "com.google.dagger:dagger:${versions.dagger}",
-                        compiler: "com.google.dagger:dagger-compiler:${versions.dagger}",
+                'koin'            : [
+                        android  : "io.insert-koin:koin-android:${versions.koin_version}",
+                        core  : "io.insert-koin:koin-core:${versions.koin_version}",
+                        viewmodel  : "io.insert-koin:koin-android-viewmodel:${versions.koin_version}"
                 ],
-                'squareup' : [
+                'squareup'          : [
                         retrofit      : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
                         converter_gson: "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
                 ],
-                'stetho'   : "com.facebook.stetho:stetho-okhttp3:${versions.stetho}",
-                'coil' :"io.coil-kt:coil:${versions.coil}",
+
+                'coil'              : "io.coil-kt:coil:${versions.coil}",
                 'material_component': "com.google.android.material:material:${versions.appcompat}"
         ]
 
@@ -64,14 +66,15 @@ buildscript {
                 'data'  : ":data",
                 'domain': ":domain"
         ]
-        versions.kotlin = '1.3.72'
-        versions.kotlin = '1.3.72'
+        versions.kotlin = '1.5.0'
+
 
     }
     repositories {
         google()
         jcenter()
     }
+
     dependencies {
         classpath "com.android.tools.build:gradle:${versions.gradle}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
@@ -79,6 +82,7 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+
 }
 
 allprojects {

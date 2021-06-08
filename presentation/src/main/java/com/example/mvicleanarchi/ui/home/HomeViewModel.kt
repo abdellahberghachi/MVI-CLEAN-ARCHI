@@ -1,37 +1,55 @@
 package com.example.mvicleanarchi.ui.home
 
-import com.example.domain.usecase.GetCharactersUseCase
-import com.example.mvicleanarchi.common.BaseViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.domain.usecase.GetRepoUseCase
+import com.example.mvicleanarchi.common.base.BaseViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onStart
-import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
-class HomeViewModel @Inject constructor(private val useCase: GetCharactersUseCase) :
-    BaseViewModel<HomeIntent, HomeAction, HomeState>() {
-    override fun intentToAction(intent: HomeIntent): HomeAction {
-        return when (intent) {
-            is HomeIntent.LoadAllCharacters -> HomeAction.LoadAllCharacters
-            is HomeIntent.ClearSearch -> HomeAction.LoadAllCharacters
-            is HomeIntent.SearchByName -> HomeAction.SearchCharacters(intent.key)
+class HomeViewModel constructor(val useCase: GetRepoUseCase) :
+    BaseViewModel<HomeContract.Event, HomeContract.State, HomeContract.Effect>() {
+
+
+    init {
+        handleEvent(HomeContract.Event.GetGithubRepo)
+    }
+
+    override fun createInitialState(): HomeContract.State {
+        return HomeContract.State(
+            HomeContract.RepoState.Idle
+        )
+    }
+
+    override fun handleEvent(event: HomeContract.Event) {
+        when (event) {
+            is HomeContract.Event.GetGithubRepo -> {
+                getRepo()
+            }
+            is HomeContract.Event.OnShowToastClicked -> {
+                setEffect { HomeContract.Effect.ShowToast }
+            }
         }
     }
 
-
-    override fun handleAction(action: HomeAction) {
-        launchOnUI {
-            when (action) {
-                is HomeAction.LoadAllCharacters -> {
-                    useCase().onStart {
-                        mState.postValue(HomeState.ShowLoading)
-                    }.catch { mState.postValue(HomeState.Exception) }
-                        .collect {
-                        mState.postValue(HomeState.ResultAllPersona(it))
+    private fun getRepo() {
+        viewModelScope.launch {
+            // Set Loading
+            setState { copy(repoState = HomeContract.RepoState.Loading) }
+            try {
+                useCase().collect {
+                    setState {
+                        copy(
+                            repoState = HomeContract.RepoState.Success(
+                                posts = it
+                            )
+                        )
                     }
                 }
 
+            } catch (exception: Exception) {
+                setEffect { HomeContract.Effect.ShowToast }
             }
         }
     }

@@ -10,8 +10,6 @@ import retrofit2.http.Query
 interface ApiService {
     @GET(PATH_CHARACTER)
     suspend fun getPosts(
-        @Query("_start") start: Int,
-        @Query("_limit") limit: Int
     ): List<PostResponse>
 
     companion object {

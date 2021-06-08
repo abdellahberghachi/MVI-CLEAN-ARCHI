@@ -1,3 +1,3 @@
-package com.hoc.flowmvi.core
+package com.example.data.common
 
 typealias Mapper<T, R> = (T) -> R

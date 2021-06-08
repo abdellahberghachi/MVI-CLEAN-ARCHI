@@ -2,9 +2,9 @@ package com.example.data.mapper
 
 import com.example.data.remote.PostResponse
 import com.example.domain.entities.Post
-import com.hoc.flowmvi.core.Mapper
+import com.example.data.common.Mapper
 
-internal class UserDomainToUserResponseMapper : Mapper<Post, PostResponse> {
+internal class PostDomainToPostResponseMapper : Mapper<Post, PostResponse> {
   override fun invoke(domain: Post): PostResponse {
     return PostResponse(
       id = domain.id,
