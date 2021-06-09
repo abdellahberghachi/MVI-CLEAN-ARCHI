@@ -1,5 +1,6 @@
 package com.example.mvicleanarchi.ui.home
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.example.domain.usecase.GetRepoUseCase
 import com.example.mvicleanarchi.common.base.BaseViewModel
@@ -49,7 +50,9 @@ class HomeViewModel constructor(val useCase: GetRepoUseCase) :
                 }
 
             } catch (exception: Exception) {
+                setState { copy(repoState = HomeContract.RepoState.Idle) }
                 setEffect { HomeContract.Effect.ShowToast }
+
             }
         }
     }

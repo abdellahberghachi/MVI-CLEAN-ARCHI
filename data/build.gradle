@@ -47,6 +47,8 @@ dependencies {
     api deps.jetbrains.coroutines_core
     api deps.jetbrains.coroutines_android
     implementation deps.koin.core
+    testImplementation(deps.mokito.core)
+    testImplementation(deps.mokito.test)
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

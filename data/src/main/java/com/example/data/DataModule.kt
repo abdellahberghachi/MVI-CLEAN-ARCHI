@@ -1,9 +1,12 @@
 package com.example.data
 
+import com.example.data.dispatchers.CoroutineDispatchers
+import com.example.data.dispatchers.CoroutineDispatchersImpl
 import com.example.data.mapper.PostDomainToPostResponseMapper
 import com.example.data.mapper.PostResponseToPostDomainMapper
 import com.example.data.remote.ApiService
 import com.example.domain.repository.RepoRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
@@ -16,6 +19,8 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 @ExperimentalCoroutinesApi
 val dataModule = module {
+
+    single { CoroutineDispatchersImpl().io }
 
     single { ApiService(retrofit = get()) }
 
@@ -34,10 +39,10 @@ val dataModule = module {
 
 
     single<RepoRepository> {
-        CharactersRepositoryImpl(
+        RepoRepositoryImpl(
             api = get(),
-            responseToDomain = get<PostResponseToPostDomainMapper>()
-
+            responseToDomain = get<PostResponseToPostDomainMapper>(),
+            dispatcher = get()
         )
     }
 }

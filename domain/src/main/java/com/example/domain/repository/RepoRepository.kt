@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface RepoRepository {
-    fun getAllCharacters(): Flow<List<Post>>
+    fun getAllRepos(): Flow<List<Post>>
 
 }
